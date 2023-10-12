@@ -8,7 +8,7 @@
                            document.getElementById('copyright').appendChild(document
                                .createTextNode(new Date().getFullYear()))
                        </script>
-                   </span>. <a href="#"> </a>{{trans('main_trans.Name_Programer')}}</p>
+                   </span>. <a href="#"> </a>{{' جميع الحقوق محفوظة 2023 . ياسين القرشي'}}</p>
            </div>
        </div>
    </div>

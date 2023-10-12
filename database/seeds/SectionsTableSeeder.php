@@ -52,7 +52,7 @@ class SectionsTableSeeder extends Seeder
                 'Name_Section' => $section,
                 'Status' => 1,
                 'Grade_id' => 2,
-                'Class_id' => 2
+                'Class_id' =>2
             ]);
             Section::create([
                 'Name_Section' => $section,
@@ -78,6 +78,15 @@ class SectionsTableSeeder extends Seeder
                 'Grade_id' => 3,
                 'Class_id' => 3
             ]);
+//            Section::create([
+//                'Name_Section' => $section,
+//                'Status' => 1,
+//                'Grade_id' => Grade::all()->unique()->random()->id,
+//                'Class_id' => ClassRoom::all()->unique()->random()->id
+//            ]);
+
+
+
         }
     }
 }

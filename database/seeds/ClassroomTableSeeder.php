@@ -22,14 +22,24 @@ class ClassroomTableSeeder extends Seeder
             'Name_Class' => $classroom,
             'Grade_id' => 1
             ]);
+
+
+        }
+        foreach ($classrooms as $classroom) {
             Classroom::create([
                 'Name_Class' => $classroom,
                 'Grade_id' => 2
             ]);
+
+
+        }
+        foreach ($classrooms as $classroom) {
             Classroom::create([
                 'Name_Class' => $classroom,
                 'Grade_id' => 3
             ]);
+
+
         }
     }
 }

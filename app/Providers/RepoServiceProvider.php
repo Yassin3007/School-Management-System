@@ -8,6 +8,8 @@ use App\Repository\FeeInvoicesRepository;
 use App\Repository\FeeInvoicesRepositoryInterface;
 use App\Repository\FeesRepository;
 use App\Repository\FeesRepositoryInterface;
+use App\Repository\LibraryRepository;
+use App\Repository\LibraryRepositoryInterface;
 use App\Repository\PaymentRepository;
 use App\Repository\PaymentRepositoryInterface;
 use App\Repository\ProcessingFeeRepository;
@@ -99,6 +101,10 @@ class RepoServiceProvider extends ServiceProvider
         $this->app->bind(
             QuestionRepositoryInterface::class ,
             QuestionRepository::class
+        );
+        $this->app->bind(
+            LibraryRepositoryInterface::class ,
+            LibraryRepository::class
         );
     }
 

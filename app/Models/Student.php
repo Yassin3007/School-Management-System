@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Translatable\HasTranslations;
 
-class Student extends Model
+class Student extends Authenticatable
 {
     use SoftDeletes;
 
@@ -75,6 +76,10 @@ class Student extends Model
     public function attendance()
     {
         return $this->hasMany(Attendance::class, 'student_id');
+    }
+
+    public function degree(){
+        return $this->hasMany(Degree::class ,'student_id');
     }
 
 }

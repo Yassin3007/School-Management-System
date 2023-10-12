@@ -1,15 +1,18 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Classrooms\ClassroomController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Questions\QuestionController;
 use App\Http\Controllers\Quizzes\QuizzController;
 use App\Http\Controllers\Sections\SectionController;
+use App\Http\Controllers\Settings\SettingController;
 use App\Http\Controllers\Students\AttendanceController;
 use App\Http\Controllers\Students\FeesController;
 use App\Http\Controllers\Students\FeesInvoicesController;
 use App\Http\Controllers\Students\GraduatedController;
+use App\Http\Controllers\Students\LibraryController;
 use App\Http\Controllers\Students\OnlineClasseController;
 use App\Http\Controllers\Students\PaymentController;
 use App\Http\Controllers\Students\ProcessingFeeController;
@@ -19,6 +22,7 @@ use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Subjects\SubjectController;
 use App\Http\Controllers\Teachers\TeacherController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,22 +35,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+//Auth::routes();
+Route::get('/',[HomeController::class,'index'])->name('selection');
+
+Route::group(['namespace'=>'auth'],function (){
+   Route::get('/login/{type}',[LoginController::class,'loginForm'])->middleware('guest')->name('login.show');
+   Route::post('/login',[LoginController::class,'login'])->name('login');
+   Route::get('/logout/{type}',[LoginController::class,'logout'])->name('logout');
+});
 
 
 //==============================Translate all pages============================
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth']
     ], function () {
 
     //==============================dashboard============================
-    Route::get('/', function (){
-        return view('auth.login');
-    })->middleware('guest');
+    Route::get('/dashboard', function (){
+        return view('dashboard');
+    })->middleware('auth:web');
 
-    Route::get('/dashboard',[HomeController::class,'index'])->name('home');
 
 
     //==============================dashboard============================
@@ -93,8 +103,7 @@ Route::group(
     //==============================Students============================
 
         Route::resource('Students',StudentController::class);
-        Route::get('/Get_classrooms/{id}', [StudentController::class,'Get_classrooms']);
-        Route::get('/Get_Sections/{id}', [StudentController::class,'Get_Sections']);
+
         Route::post('Upload_attachment', [StudentController::class,'Upload_attachment'])->name('Upload_attachment');
         Route::get('Download_attachment/{studentsname}/{filename}', [StudentController::class,'Download_attachment'])->name('Download_attachment');
         Route::post('Delete_attachment', [StudentController::class,'Delete_attachment'])->name('Delete_attachment');
@@ -107,6 +116,10 @@ Route::group(
         Route::resource('Payment_students', PaymentController::class);
         Route::resource('Attendance', AttendanceController::class);
         Route::resource('online_classes', OnlineClasseController::class);
+        Route::get('/indirectDashboard', [OnlineClasseController::class,'indirectCreate'])->name('indirect.create');
+        Route::post('/indirectDashboard', [OnlineClasseController::class,'storeIndirect'])->name('indirect.store');
+        Route::resource('library',LibraryController::class);
+    Route::get('download_file/{filename}', [LibraryController::class,'downloadAttachment'])->name('downloadAttachment');
 
 
      //==============================subjects============================
@@ -124,5 +137,5 @@ Route::group(
 
 
     //==============================Setting============================
-    Route::resource('settings', 'SettingController');
+    Route::resource('settings', SettingController::class);
 });

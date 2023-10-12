@@ -12,7 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
-        "livewire/livewire": "^2.11",
+        "livewire/livewire": "^2.12",
         "macsidigital/laravel-zoom": "^6.0",
         "mcamara/laravel-localization": "^1.7",
         "spatie/laravel-multitenancy": "3.0",
